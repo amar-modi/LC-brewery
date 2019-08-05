@@ -1,6 +1,7 @@
 package com.amarmodi.beer.msscbeerservice.controller;
 
 import com.amarmodi.beer.msscbeerservice.model.BeerDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/beer")
+@Slf4j
 public class BeerController {
 
     @GetMapping("/{beerId}")
@@ -25,5 +27,11 @@ public class BeerController {
     @PutMapping("/{beerId}")
     public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto){
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{beerId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBeer(@PathVariable("beerId") UUID beerId){
+        log.error("Deleting the beer" + beerId.toString());
     }
 }
