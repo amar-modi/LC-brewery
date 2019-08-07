@@ -1,5 +1,6 @@
 package com.amarmodi.beer.msscbeerservice.controller;
 
+import com.amarmodi.beer.msscbeerservice.domain.Beer;
 import com.amarmodi.beer.msscbeerservice.model.BeerDto;
 import com.amarmodi.beer.msscbeerservice.model.BeerStyleEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @WebMvcTest(BeerController.class)
@@ -32,13 +34,7 @@ class BeerControllerTest {
 
     @Test
     void saveNewBeer() throws Exception {
-        BeerDto beerDto = BeerDto.builder()
-                .id(UUID.randomUUID())
-                .beerName("DogFish")
-                .beerStyle(BeerStyleEnum.IPA)
-                .version(2)
-                .upc(23L)
-                .build();
+        BeerDto beerDto = getValidBeerDto();
         String beerDTOJson = objectMapper.writeValueAsString(beerDto);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/beer/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -50,13 +46,7 @@ class BeerControllerTest {
     @Test
     void updateBeerById() throws Exception {
         UUID id = UUID.randomUUID();
-        BeerDto beerDto = BeerDto.builder()
-                .id(id)
-                .beerName("DogFish")
-                .beerStyle(BeerStyleEnum.IPA)
-                .version(2)
-                .upc(23L)
-                .build();
+        BeerDto beerDto = getValidBeerDto();
         String beerDTOJson = objectMapper.writeValueAsString(beerDto);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/beer/" + id.toString())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,5 +54,14 @@ class BeerControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
+    }
+
+    private BeerDto getValidBeerDto(){
+        return BeerDto.builder()
+                .beerName("Mount Hair")
+                .beerStyle(BeerStyleEnum.PALE_ALE)
+                .price(new BigDecimal("2.34"))
+                .upc(2457654323456L)
+                .build();
     }
 }
