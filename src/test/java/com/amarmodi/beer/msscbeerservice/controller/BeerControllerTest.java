@@ -1,12 +1,15 @@
 package com.amarmodi.beer.msscbeerservice.controller;
 
+import com.amarmodi.beer.msscbeerservice.bootstrap.BeerLoader;
 import com.amarmodi.beer.msscbeerservice.domain.Beer;
 import com.amarmodi.beer.msscbeerservice.model.BeerDto;
 import com.amarmodi.beer.msscbeerservice.model.BeerStyleEnum;
+import com.amarmodi.beer.msscbeerservice.services.BeerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,6 +26,9 @@ class BeerControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockBean
+    private BeerService beerService;
 
     @Test
     void getBeerById() throws Exception {
@@ -61,7 +67,7 @@ class BeerControllerTest {
                 .beerName("Mount Hair")
                 .beerStyle(BeerStyleEnum.PALE_ALE)
                 .price(new BigDecimal("2.34"))
-                .upc(2457654323456L)
+                .upc(BeerLoader.BEER_1_UPC)
                 .build();
     }
 }
