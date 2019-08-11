@@ -28,4 +28,8 @@ public class BeerPagedList extends PageImpl<BeerDto> {
     public BeerPagedList(List<BeerDto> content) {
         super(content);
     }
+
+    public <R> BeerPagedList(R collect, PageRequest of, long totalElements) {
+        super((List<BeerDto>) collect, of, totalElements);
+    }
 }
