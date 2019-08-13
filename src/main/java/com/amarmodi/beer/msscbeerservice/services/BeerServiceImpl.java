@@ -7,6 +7,7 @@ import com.amarmodi.beer.msscbeerservice.model.BeerPagedList;
 import com.amarmodi.beer.msscbeerservice.model.BeerStyleEnum;
 import com.amarmodi.beer.msscbeerservice.repositories.BeerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class BeerServiceImpl implements BeerService {
     private final BeerMapper beerMapper;
 
     @Override
+    @Cacheable(cacheNames = "beerCache", key="#beerId" ,condition="#showInventoryOnHand == false")
     public BeerDto getById(UUID beerId, boolean showInventoryOnHand) {
         BeerDto beerDto = null;
         if(showInventoryOnHand){
@@ -51,7 +53,9 @@ public class BeerServiceImpl implements BeerService {
         return beerMapper.BeerToBeerDto(beerRepository.save(beer));
     }
 
+    //The cache condition is going to occur in the incident that this happened.
     @Override
+    @Cacheable(cacheNames = "beerListCache", condition="#showInventoryOnHand == false")
     public BeerPagedList listBeers(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest, Boolean showInventoryOnHand) {
 
         BeerPagedList beerPagedList;
@@ -93,5 +97,17 @@ public class BeerServiceImpl implements BeerService {
         }
 
         return beerPagedList;
+    }
+
+    @Override
+    @Cacheable(cacheNames = "beerUpcCache", key = "#upc")
+    public BeerDto getByUPC(String upc,  boolean showInventoryOnHand) {
+        Beer beer = beerRepository.findByUpc(upc).orElseThrow(NotFoundException::new);
+        if(showInventoryOnHand){
+            return beerMapper.BeerToBeerDto(beer);
+        } else {
+            return beerMapper.BeerToBeerDtoNoInventory(beer);
+        }
+
     }
 }

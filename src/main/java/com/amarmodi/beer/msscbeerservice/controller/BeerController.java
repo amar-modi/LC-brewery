@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-import static org.springframework.beans.support.PagedListHolder.DEFAULT_PAGE_SIZE;
-
 @RestController
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v1/")
 @Slf4j
 @RequiredArgsConstructor
 public class BeerController {
@@ -48,23 +46,30 @@ public class BeerController {
         return new ResponseEntity<>(beerList, HttpStatus.OK);
     }
 
-    @GetMapping("/{beerId}")
+    @GetMapping("beer/{beerId}")
     public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId")UUID beerId,
                                                @RequestParam(required = false, defaultValue = "false") Boolean showInventoryOnHand){
         return new ResponseEntity<>(beerService.getById(beerId, showInventoryOnHand), HttpStatus.OK);
     }
 
-    @PostMapping("")
+
+    @GetMapping("beerUpc/{upc}")
+    public ResponseEntity<BeerDto> getBeerByUpc(@PathVariable("upc") String upc,
+                                                @RequestParam(required =false, defaultValue = "false") Boolean showInventoryOnHand){
+        return new ResponseEntity<>(beerService.getByUPC(upc,showInventoryOnHand ), HttpStatus.OK);
+    }
+
+    @PostMapping("beer")
     public ResponseEntity saveNewBeer(@Valid @RequestBody BeerDto beerDto){
         return new ResponseEntity(beerService.saveNewBeer(beerDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{beerId}")
+    @PutMapping("beer/{beerId}")
     public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDto beerDto){
         return new ResponseEntity(beerService.save(beerId, beerDto), HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/{beerId}")
+    @DeleteMapping("beer/{beerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBeer(@PathVariable("beerId") UUID beerId){
 
