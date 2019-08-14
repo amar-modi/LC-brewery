@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeerLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mssc-beer-service</a> &gt; <a href="index.source.html" class="el_package">com.amarmodi.beer.msscbeerservice.bootstrap</a> &gt; <span class="el_source">BeerLoader.java</span></div><h1>BeerLoader.java</h1><pre class="source lang-java linenums">package com.amarmodi.beer.msscbeerservice.bootstrap;
+
+import com.amarmodi.beer.msscbeerservice.domain.Beer;
+import com.amarmodi.beer.msscbeerservice.model.BeerDto;
+import com.amarmodi.beer.msscbeerservice.repositories.BeerRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+
+//@Component
+public class BeerLoader implements CommandLineRunner {
+
+    public static final String BEER_1_UPC = &quot;234200036&quot;;
+    public static final String BEER_2_UPC = &quot;234300019&quot;;
+    public static final String BEER_3_UPC = &quot;783375213&quot;;
+<span class="nc" id="L18">    public static final UUID BEER_1_UUID = UUID.fromString(&quot;0a818933-087d-47f2-ad83-2f986ed087eb&quot;);</span>
+<span class="nc" id="L19">    public static final UUID BEER_2_UUID = UUID.fromString(&quot;a712d914-61ea-4623-8bd0-32c0f6545bfd&quot;);</span>
+<span class="nc" id="L20">    public static final UUID BEER_3_UUID = UUID.fromString(&quot;026cc3c8-3a0c-4083-a05b-e908048c1b08&quot;);</span>
+
+
+    private final BeerRepository beerRepository;
+
+<span class="nc" id="L25">    public BeerLoader(BeerRepository beerRepository) {</span>
+<span class="nc" id="L26">        this.beerRepository = beerRepository;</span>
+<span class="nc" id="L27">    }</span>
+
+    @Override
+    public void run(String... args) throws Exception {
+<span class="nc" id="L31">        loadBeer();</span>
+<span class="nc" id="L32">    }</span>
+
+    private void loadBeer() {
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if(beerRepository.count() != 0) return;</span>
+<span class="nc" id="L36">        Beer beer = Beer.builder()</span>
+<span class="nc" id="L37">                .beerName(&quot;Lagunitas&quot;)</span>
+<span class="nc" id="L38">                .beerStyle(&quot;IPA&quot;)</span>
+<span class="nc" id="L39">                .minOnHand(12)</span>
+<span class="nc" id="L40">                .quantityToBrew(200)</span>
+<span class="nc" id="L41">                .upc(BEER_1_UPC)</span>
+<span class="nc" id="L42">                .price(new BigDecimal(&quot;12.95&quot;))</span>
+<span class="nc" id="L43">                .build();</span>
+
+<span class="nc" id="L45">        Beer beer2 = Beer.builder()</span>
+<span class="nc" id="L46">                .beerName(&quot;Mad Elf&quot;)</span>
+<span class="nc" id="L47">                .beerStyle(&quot;IPA&quot;)</span>
+<span class="nc" id="L48">                .minOnHand(5)</span>
+<span class="nc" id="L49">                .quantityToBrew(100)</span>
+<span class="nc" id="L50">                .upc(BEER_2_UPC)</span>
+<span class="nc" id="L51">                .price(new BigDecimal(&quot;15.95&quot;))</span>
+<span class="nc" id="L52">                .build();</span>
+
+<span class="nc" id="L54">        Beer beer3 = Beer.builder()</span>
+<span class="nc" id="L55">                .beerName(&quot;No Hammers on the Bar&quot;)</span>
+<span class="nc" id="L56">                .beerStyle(&quot;PALE_ALE&quot;)</span>
+<span class="nc" id="L57">                .minOnHand(5)</span>
+<span class="nc" id="L58">                .quantityToBrew(100)</span>
+<span class="nc" id="L59">                .upc(BEER_3_UPC)</span>
+<span class="nc" id="L60">                .price(new BigDecimal(&quot;15.95&quot;))</span>
+<span class="nc" id="L61">                .build();</span>
+
+<span class="nc" id="L63">        this.beerRepository.save(beer);</span>
+<span class="nc" id="L64">        this.beerRepository.save(beer2);</span>
+<span class="nc" id="L65">        this.beerRepository.save(beer3);</span>
+<span class="nc" id="L66">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,4 @@
+com/amarmodi/beer/msscbeerservice/controller/FakeTest.class
+com/amarmodi/beer/msscbeerservice/controller/BeerControllerTest.class
+com/amarmodi/beer/msscbeerservice/services/inventory/BeerInventoryServiceRestTemplateImplTest.class
+com/amarmodi/beer/msscbeerservice/MsscBeerServiceApplicationTests.class
