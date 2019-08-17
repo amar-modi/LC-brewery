@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,8 @@ public class BrewBeerListener {
     private final BeerRepository beerRepository;
     private final JmsTemplate jmsTemplate;
 
+    // We needed a Hibernate session with @Transactional
+    @Transactional
     @JmsListener(destination = JmsConfiguration.BREWING_QUEUE)
     public void listen( BrewBeerEvent brewBeerEvent){
         BeerDto beerDto = brewBeerEvent.getBeerDto();

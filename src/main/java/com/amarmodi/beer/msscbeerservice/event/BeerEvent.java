@@ -1,14 +1,16 @@
 package com.amarmodi.beer.msscbeerservice.event;
 
 import com.amarmodi.beer.msscbeerservice.model.BeerDto;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class BeerEvent {
 
-    private final BeerDto beerDto;
+    private BeerDto beerDto;
 }
