@@ -1,4 +1,4 @@
-package com.amarmodi.beer.msscbeerservice.services;
+package com.amarmodi.beer.msscbeerservice.services.brewing;
 
 import com.amarmodi.beer.msscbeerservice.config.JmsConfiguration;
 import com.amarmodi.beer.msscbeerservice.domain.Beer;

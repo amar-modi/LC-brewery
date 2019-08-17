@@ -10,6 +10,7 @@ import org.springframework.jms.support.converter.MessageType;
 public class JmsConfiguration {
 
     public static final String BREWING_QUEUE = "brewing-request";
+    public static final String NEW_INVENTORY_QUEUE = "new-inventory";
 
     @Bean
     public MessageConverter messageConverter(){
