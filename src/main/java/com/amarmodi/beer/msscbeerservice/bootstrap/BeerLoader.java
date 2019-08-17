@@ -3,21 +3,24 @@ package com.amarmodi.beer.msscbeerservice.bootstrap;
 import com.amarmodi.beer.msscbeerservice.domain.Beer;
 import com.amarmodi.beer.msscbeerservice.model.BeerDto;
 import com.amarmodi.beer.msscbeerservice.repositories.BeerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
-//@Component
+@Component
 public class BeerLoader implements CommandLineRunner {
 
     public static final String BEER_1_UPC = "234200036";
     public static final String BEER_2_UPC = "234300019";
     public static final String BEER_3_UPC = "783375213";
-    public static final UUID BEER_1_UUID = UUID.fromString("0a818933-087d-47f2-ad83-2f986ed087eb");
-    public static final UUID BEER_2_UUID = UUID.fromString("a712d914-61ea-4623-8bd0-32c0f6545bfd");
-    public static final UUID BEER_3_UUID = UUID.fromString("026cc3c8-3a0c-4083-a05b-e908048c1b08");
+    public static final String BEER_4_UPC = "345676543";
 
 
     private final BeerRepository beerRepository;
@@ -49,6 +52,8 @@ public class BeerLoader implements CommandLineRunner {
                 .quantityToBrew(100)
                 .upc(BEER_2_UPC)
                 .price(new BigDecimal("15.95"))
+                .createdDate(new Timestamp(new Date().getTime()))
+                .lastModifiedDate(new Timestamp(new Date().getTime()))
                 .build();
 
         Beer beer3 = Beer.builder()
@@ -60,8 +65,18 @@ public class BeerLoader implements CommandLineRunner {
                 .price(new BigDecimal("15.95"))
                 .build();
 
+        Beer beer4 = Beer.builder()
+                .beerName("Mango Bobs")
+                .beerStyle("IPA")
+                .minOnHand(12)
+                .quantityToBrew(200)
+                .upc(BEER_4_UPC)
+                .price(new BigDecimal("12.95"))
+                .build();
+
         this.beerRepository.save(beer);
         this.beerRepository.save(beer2);
         this.beerRepository.save(beer3);
+        this.beerRepository.save(beer4);
     }
 }
